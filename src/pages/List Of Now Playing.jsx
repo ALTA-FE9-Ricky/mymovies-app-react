@@ -1,12 +1,15 @@
 import { Component } from "react";
 import '../styles/App.css';
 import Layout from "../components/Layout";
-
+import axios from "axios";
+import Card from "../components/card";
+import { ButtonPrimary } from "../components/Button";
 class App extends Component{
     state = {
         title: "List Of Now",
         datas: [],
-        loading: true
+        loading: true,
+        page: 1,
     }
 
     componentDidMount() {
@@ -14,31 +17,35 @@ class App extends Component{
     }
     
     fetchdata(){
-        let dataTemp = []
-        for(let i= 0;i<10;i++){
-            const temp = {
-                id: i +1,
-                title: `FILM TITLE ${i+1}`,
-                image: "https://genshin.honeyhunterworld.com/img/nilou_070.webp"
-            }
-            dataTemp.push(temp)
-        }
-        this.setState({datas: dataTemp})
+    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=976fb07f6e28d0eb75915ad2c1b0836e&page=${this.state.page}`)
+    .then((res) =>{
+        const { results } =res.data
+        const newPage = this.state.page + 1
+        const temp = [...this.state.datas]
+        temp.push(...results)
+        this.setState({datas: temp, page: newPage})
+    })
+    .catch((err) =>{})
+    .finally(() =>{
+        this.setState({loading: false})
+    })
     }
     
     render() {
         return(
         <Layout>
-        <div>
+        <div className="w-full flex flex-col">
             <p className="text-center">{this.state.title} Playing</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 m-4">
             {this.state.datas.map((data) => (
-                <div className="flex flex-col justify-center p-4 shadow-xl shadow-fuchsia-500 rounded-lg" key={data.id}>
-                    <img src={data.image} alt={data.title}/>
-                    <p className="text-center">{data.title}</p>
-                </div>
+                <Card
+                 key={data.id}
+                 image={data.poster_path}
+                 title={data.title}
+                />
             ))}
             </div>
+            <ButtonPrimary label="Load More" onClick={() => this.fetchdata()}/>
         </div>
         </Layout>
         )

@@ -12,11 +12,6 @@ class App extends Component{
     }
 
     fetchdata(){
-        let dataTemp = []
-        const temp = {
-        image: "https://genshin.honeyhunterworld.com/img/nilou_070.webp"
-        }
-        dataTemp.push(temp)
     }
 
 
@@ -24,8 +19,7 @@ class App extends Component{
     return (
       <Layout>
       <div>
-      <p className="text-center">{this.state.title}</p>
-      <img src={data.image} alt={data.title}/>
+      
       </div>
       </Layout>
     )

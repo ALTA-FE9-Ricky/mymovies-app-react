@@ -1,6 +1,7 @@
 import { Component } from "react";
 import '../styles/App.css';
 import Layout from "../components/Layout";
+import axios from "axios";
 
 class App extends Component{
     state = {
@@ -14,16 +15,7 @@ class App extends Component{
     }
     
     fetchdata(){
-        let dataTemp = []
-        for(let i= 0;i<10;i++){
-            const temp = {
-                id: i +1,
-                title: `FILM TITLE ${i+1}`,
-                image: "https://genshin.honeyhunterworld.com/img/nilou_070.webp"
-            }
-            dataTemp.push(temp)
-        }
-        this.setState({datas: dataTemp})
+    // this.setState({datas: dataTemp})
     }
     
     render() {
