@@ -4,7 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "alta-primary" : "#19345E"
+        "alta-primary" : "#19345E",
+        "grey" : "#3F617E",
+        "neon" : "#5bccf6",
+        "Yellow" : "#fcde67",
+        "hitam" : "#030e12"
       }
     },
   },

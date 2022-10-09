@@ -4,7 +4,7 @@ export class ButtonPrimary extends Component {
   render() {
     return (
       <button
-        className="p-3 border rounded-lg bg-white text-black text-center font-bold cursor-pointer"
+        className="p-3 border rounded-full bg-white text-black text-center font-bold cursor-pointer"
         onClick={this.props.onClick}
       >
         {this.props.label}

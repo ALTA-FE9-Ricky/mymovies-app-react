@@ -1,9 +1,11 @@
 import { Component } from "react";
 import '../styles/App.css';
+import Card from "../components/card";
+import { WithRouter } from "../utils/Navigation";
 import Layout from "../components/Layout";
-import axios from "axios";
+// import axios from "axios";
 
-class App extends Component{
+class Favorite extends Component{
     state = {
         title: "List Your Favorite Movie",
         datas: [],
@@ -13,22 +15,34 @@ class App extends Component{
     componentDidMount() {
         this.fetchdata()
     }
+
+    handleRemoveFav(){
+        
+    }
     
     fetchdata(){
+    const getMovies = localStorage.getItem("favMovies")
+    if(getMovies){
+        const parsedMovies = JSON.parse(getMovies)
+        this.setState({datas: parsedMovies, loading: false})
+    }
     // this.setState({datas: dataTemp})
     }
     
     render() {
         return(
         <Layout>
-        <div>
+        <div className="w-full flex flex-col">
             <p className="text-center">{this.state.title}</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 m-4">
             {this.state.datas.map((data) => (
-                <div className="flex flex-col justify-center p-4 shadow-xl shadow-fuchsia-500 rounded-lg" key={data.id}>
-                    <img src={data.image} alt={data.title}/>
-                    <p className="text-center">{data.title}</p>
-                </div>
+                <Card
+                 key={data.id}
+                 image={data.poster_path}
+                 title={data.title}
+                 onNavigate={() => this.props.navigate(`/detail/${data.id}`)}
+                 addFavorite={() => this.handleFav(data)}
+                />
             ))}
             </div>
         </div>
@@ -37,4 +51,4 @@ class App extends Component{
     }
 }
 
-export default App
+export default WithRouter(Favorite)

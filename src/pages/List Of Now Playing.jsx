@@ -1,12 +1,15 @@
 import { Component } from "react";
 import '../styles/App.css';
+
+import { WithRouter } from "../utils/Navigation";
+
 import Layout from "../components/Layout";
 import axios from "axios";
 import Card from "../components/card";
 import { ButtonPrimary } from "../components/Button";
 class App extends Component{
     state = {
-        title: "List Of Now",
+        title: "List Of Now Playing",
         datas: [],
         loading: true,
         page: 1,
@@ -14,6 +17,19 @@ class App extends Component{
 
     componentDidMount() {
         this.fetchdata()
+    }
+
+    handleFav(movie) {
+        const getMovies = localStorage.getItem("favMovies")
+        if (getMovies){
+            const parsedMovies = JSON.parse(getMovies)
+            parsedMovies.push(movie)
+            const temp = JSON.stringify(parsedMovies)
+            localStorage.setItem("favMovies",temp)
+        } else{
+            const temp = JSON.stringify([movie])
+            localStorage.setItem("favMovies",temp)
+        }
     }
     
     fetchdata(){
@@ -25,7 +41,9 @@ class App extends Component{
         temp.push(...results)
         this.setState({datas: temp, page: newPage})
     })
-    .catch((err) =>{})
+    .catch((err) =>{
+        alert(err.toString())
+    })
     .finally(() =>{
         this.setState({loading: false})
     })
@@ -35,13 +53,15 @@ class App extends Component{
         return(
         <Layout>
         <div className="w-full flex flex-col">
-            <p className="text-center">{this.state.title} Playing</p>
+            <p className="text-center">{this.state.title}</p>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 m-4">
             {this.state.datas.map((data) => (
                 <Card
                  key={data.id}
                  image={data.poster_path}
                  title={data.title}
+                 onNavigate={() => this.props.navigate(`/detail/${data.id}`)}
+                 addFavorite={() => this.handleFav(data)}
                 />
             ))}
             </div>
@@ -52,4 +72,4 @@ class App extends Component{
     }
 }
 
-export default App
+export default WithRouter(App)
