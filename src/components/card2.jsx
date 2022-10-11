@@ -1,6 +1,7 @@
 import React from 'react'
 import { ButtonPrimary } from './Button'
-function Card(props) {
+
+function Card2(props) {
 
     return (
       <div className='flex flex-col justify-center p-4 shadow-lg rounded-lg border bg-white'>
@@ -8,10 +9,10 @@ function Card(props) {
         <img src={`https://image.tmdb.org/t/p/w500${props.image}`} alt={props.title} />
         <p className='text-center'>{props.title}</p>
         </div>
-        <ButtonPrimary label= "Add to Favorite " onClick={props.addFavorite}/>
+        <ButtonPrimary label= "Remove From Favorite " onClick={props.addFavorite}/>
       </div>
     )
   }
 
 
-export default Card
+export default Card2

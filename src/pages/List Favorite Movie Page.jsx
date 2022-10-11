@@ -1,54 +1,58 @@
-import { Component } from "react";
-import '../styles/App.css';
-import Card from "../components/card";
-import { WithRouter } from "../utils/Navigation";
-import Layout from "../components/Layout";
+import React,{ useEffect,useState} from "react";
+import 'styles/App.css';
+import Card2 from "components/card2";
+import { WithRouter } from "utils/Navigation";
+import Layout from "components/Layout";
+import { useTitle } from "utils/useTitle";
 // import axios from "axios";
 
-class Favorite extends Component{
-    state = {
-        title: "List Your Favorite Movie",
-        datas: [],
-        loading: true
-    }
+function Favorite(){
+    const [titles] = useState("List Your Favorite Movie")
+    const [datas,setDatas] = useState([])
+    const [loading,setLoading] = useState(true)
+    useTitle("List Your Favorite Movie")
 
-    componentDidMount() {
-        this.fetchdata()
-    }
+    useEffect(() => {
+        fetchdata()
+    },[])
 
-    handleRemoveFav(){
-        
+
+    function handleRemoveFav(movie){
+        const rem = datas.filter((e) => e !== movie)
+        setDatas(rem)
+        localStorage.setItem("favMovie",rem)
     }
     
-    fetchdata(){
+    function fetchdata(){
     const getMovies = localStorage.getItem("favMovies")
     if(getMovies){
         const parsedMovies = JSON.parse(getMovies)
-        this.setState({datas: parsedMovies, loading: false})
+        setDatas(parsedMovies)
+        setLoading(false)
     }
-    // this.setState({datas: dataTemp})
     }
     
-    render() {
         return(
+            <>
         <Layout>
         <div className="w-full flex flex-col">
-            <p className="text-center">{this.state.title}</p>
+            <p className="text-center">{titles}</p>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 m-4">
-            {this.state.datas.map((data) => (
-                <Card
+            {datas.map((data) => (
+                <Card2
                  key={data.id}
                  image={data.poster_path}
                  title={data.title}
-                 onNavigate={() => this.props.navigate(`/detail/${data.id}`)}
-                 addFavorite={() => this.handleFav(data)}
+                //  onNavigate={() => props.navigate(`/detail/${data.id}`)}
+                 addFavorite={() => handleRemoveFav(data)}
                 />
             ))}
             </div>
         </div>
         </Layout>
+        </>
         )
     }
-}
+
 
 export default WithRouter(Favorite)

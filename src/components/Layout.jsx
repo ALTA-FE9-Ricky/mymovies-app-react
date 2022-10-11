@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 // import { FcFilmReel } from 'react-icons/fc'
-export class layout extends Component {
-  render() {
+function layout(props) {
     return (
       <>
       <div className='w-full h-screen overflow-auto bg-Yellow'>
@@ -16,10 +15,9 @@ export class layout extends Component {
             </Link>
             </div>
         </nav>
-        {this.props.children}</div>
+        {props.children}</div>
         </>
     )
   }
-}
 
 export default layout

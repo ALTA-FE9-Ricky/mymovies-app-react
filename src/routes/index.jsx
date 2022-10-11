@@ -1,13 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import Home from "../pages/List Of Now Playing"
-import Detail from "../pages/Detail Movie"
-import Favorite from "../pages/List Favorite Movie Page"
-import NotFound from '../pages/NotFound'
+import Home from "pages/List Of Now Playing"
+import Detail from "pages/Detail Movie"
+import Favorite from "pages/List Favorite Movie Page"
+import NotFound from 'pages/NotFound'
 
-class App extends Component {
-  render() {
+function App()  {  
     return (
       <BrowserRouter>
       <Routes> 
@@ -19,6 +18,6 @@ class App extends Component {
         </BrowserRouter>
     )
   }
-}
+
 
 export default App
