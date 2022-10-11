@@ -8,7 +8,7 @@ import { useFetchGet } from "utils/useFetchGet";
 
 function DetailMovie(props){
         const { id_movie } = props.params
-        const [data] = useFetchGet(`https://api.themoviedb.org/3/movie/${id_movie}?api_key=976fb07f6e28d0eb75915ad2c1b0836e&append_to_response=videos`)
+        const [data] = useFetchGet(`https://api.themoviedb.org/3/movie/${id_movie}?api_key=${process.env.REACT_APP_TMDB_KEY}&append_to_response=videos`)
         const [detail, setDetail] = useState(data)
         const [loading, setLoading] = useState(true)
         const [videos, setVideos] = useState([])
@@ -17,7 +17,7 @@ function DetailMovie(props){
 
     function fetchdata(){
       axios
-      .get(`https://api.themoviedb.org/3/movie/${id_movie}?api_key=976fb07f6e28d0eb75915ad2c1b0836e&append_to_response=videos`)
+      .get(`https://api.themoviedb.org/3/movie/${id_movie}?api_key=${process.env.REACT_APP_TMDB_KEY}&append_to_response=videos`)
       .then ((res) =>{
         const { data } = res
         setDetail(data)
@@ -37,7 +37,7 @@ function DetailMovie(props){
     
     return (
       <Layout>
-        <div className="flex p-24 content-center flex-col md:flex-row lg:flex-row gap-10">
+        <div className="flex p-24 content-center flex-col md:flex-row lg:flex-row gap-20">
         <img className="w-80 h-4/12" src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} alt={props.title} />
         <div className="flex flex-col md:flex-col lg:flex-col">
         <h1 className="text-5xl">{data.title}</h1>
@@ -53,14 +53,13 @@ function DetailMovie(props){
         <p className="text-lg">Budget: {data.budget} $</p>
         <br />
         <p className="text-lg">Revenue: {data.revenue} $</p>
-        <p className="text-lg">Revenue: {data.genres} $</p>
         <br />
         <p className="text-lg">Status: {data.status}</p>
         </div>
         </div>
         <p className="flex flex-col px-16 text-xl"> Overview <br />{data.overview}</p>
         <br />
-        <p className="text-xl font-bold px-16">Result for movie Videos,trailer or etc : </p>
+        {/* <p className="text-xl font-bold px-16">Result for movie Videos,trailer or etc : </p>
         <br />
         <div className="flex flex-col md:flex-col lg:flex-col gap-4 justify-center px-96">
           {videos.map((video) => (
@@ -74,7 +73,7 @@ function DetailMovie(props){
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen/>
           ))}
-        </div>
+        </div> */}
       </Layout>
     )
   }

@@ -25,4 +25,15 @@ function ButtonSecondary(props){
     );
   }
 
-export { ButtonPrimary, ButtonSecondary }
+  function ButtonThird(props){
+    return (
+      <button
+        className="cursor-pointer"
+        onClick={props.onClick}
+      >
+        {props.label}
+      </button>
+    );
+  }
+
+export { ButtonPrimary, ButtonSecondary, ButtonThird }
